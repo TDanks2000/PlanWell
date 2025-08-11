@@ -49,7 +49,7 @@ const createMealSchema = z.object({
 	servings: z.number().min(1).optional(),
 	mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]).optional(),
 	dayOfWeek: z.number().min(0).max(6).optional(),
-	plannedDate: z.date().optional(),
+	plannedDate: z.string().optional(),
 });
 
 const updateMealSchema = z.object({
@@ -352,7 +352,9 @@ export const mealPlannerRouter = router({
 					servings: input.servings,
 					mealType: input.mealType,
 					dayOfWeek: input.dayOfWeek,
-					plannedDate: input.plannedDate,
+					plannedDate: input.plannedDate
+						? new Date(input.plannedDate)
+						: undefined,
 					createdBy: ctx.session.user.id,
 				})
 				.returning()

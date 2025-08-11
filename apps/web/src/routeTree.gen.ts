@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MealPlannerIndexRouteImport } from './routes/mealPlanner/index'
 import { Route as GroupsIndexRouteImport } from './routes/groups/index'
+import { Route as MealPlannerGroupIdRouteImport } from './routes/mealPlanner/$groupId'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups/$groupId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,9 +20,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MealPlannerIndexRoute = MealPlannerIndexRouteImport.update({
+  id: '/mealPlanner/',
+  path: '/mealPlanner/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GroupsIndexRoute = GroupsIndexRouteImport.update({
   id: '/groups/',
   path: '/groups/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MealPlannerGroupIdRoute = MealPlannerGroupIdRouteImport.update({
+  id: '/mealPlanner/$groupId',
+  path: '/mealPlanner/$groupId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GroupsGroupIdRoute = GroupsGroupIdRouteImport.update({
@@ -32,31 +44,55 @@ const GroupsGroupIdRoute = GroupsGroupIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
+  '/mealPlanner/$groupId': typeof MealPlannerGroupIdRoute
   '/groups': typeof GroupsIndexRoute
+  '/mealPlanner': typeof MealPlannerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
+  '/mealPlanner/$groupId': typeof MealPlannerGroupIdRoute
   '/groups': typeof GroupsIndexRoute
+  '/mealPlanner': typeof MealPlannerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
+  '/mealPlanner/$groupId': typeof MealPlannerGroupIdRoute
   '/groups/': typeof GroupsIndexRoute
+  '/mealPlanner/': typeof MealPlannerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/groups/$groupId' | '/groups'
+  fullPaths:
+    | '/'
+    | '/groups/$groupId'
+    | '/mealPlanner/$groupId'
+    | '/groups'
+    | '/mealPlanner'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/groups/$groupId' | '/groups'
-  id: '__root__' | '/' | '/groups/$groupId' | '/groups/'
+  to:
+    | '/'
+    | '/groups/$groupId'
+    | '/mealPlanner/$groupId'
+    | '/groups'
+    | '/mealPlanner'
+  id:
+    | '__root__'
+    | '/'
+    | '/groups/$groupId'
+    | '/mealPlanner/$groupId'
+    | '/groups/'
+    | '/mealPlanner/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
+  MealPlannerGroupIdRoute: typeof MealPlannerGroupIdRoute
   GroupsIndexRoute: typeof GroupsIndexRoute
+  MealPlannerIndexRoute: typeof MealPlannerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +104,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mealPlanner/': {
+      id: '/mealPlanner/'
+      path: '/mealPlanner'
+      fullPath: '/mealPlanner'
+      preLoaderRoute: typeof MealPlannerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/groups/': {
       id: '/groups/'
       path: '/groups'
       fullPath: '/groups'
       preLoaderRoute: typeof GroupsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mealPlanner/$groupId': {
+      id: '/mealPlanner/$groupId'
+      path: '/mealPlanner/$groupId'
+      fullPath: '/mealPlanner/$groupId'
+      preLoaderRoute: typeof MealPlannerGroupIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId': {
@@ -88,7 +138,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
+  MealPlannerGroupIdRoute: MealPlannerGroupIdRoute,
   GroupsIndexRoute: GroupsIndexRoute,
+  MealPlannerIndexRoute: MealPlannerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

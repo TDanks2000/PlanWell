@@ -56,6 +56,9 @@ export const useGroups = () => {
 				});
 				toast.success("Group deleted");
 			},
+			onError: (error) => {
+				toast.error(error.message ?? "unkown error occured");
+			},
 		}),
 	);
 

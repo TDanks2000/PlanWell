@@ -27,7 +27,7 @@ export const Route = createFileRoute("/groups/$groupId")({
 function GroupDetailComponent() {
 	const { groupId } = Route.useParams();
 	const { group, groupInvitations } = useGroup(groupId);
-	const { leaveGroup } = useGroups();
+	const { leaveGroup, deleteGroup } = useGroups();
 	const navigate = useNavigate();
 
 	if (group.isLoading) return <Loader />;
@@ -68,13 +68,17 @@ function GroupDetailComponent() {
 	const isAdminOrMod = groupData.members.some(
 		(m) => m.role === "admin" || m.role === "moderator",
 	);
+	const isAdmin = groupData.members.some((m) => m.role === "admin");
 
 	return (
 		<div className="mx-auto w-full max-w-5xl px-2 py-8">
 			<GroupHeader
 				name={groupData.name}
 				description={groupData.description}
-				onBack={() => navigate({ to: "/groups" })}
+				showBack
+				onBack={() => {
+					void navigate({ to: "/groups" });
+				}}
 			/>
 
 			<div className="mt-6 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -89,41 +93,89 @@ function GroupDetailComponent() {
 					<div />
 				)}
 
-				<AlertDialog>
-					<AlertDialogTrigger asChild>
-						<Button
-							variant="destructive"
-							className="self-end sm:self-auto"
-							disabled={leaveGroup.isPending}
-						>
-							{leaveGroup.isPending ? "Leaving…" : "Leave Group"}
-						</Button>
-					</AlertDialogTrigger>
-					<AlertDialogContent>
-						<AlertDialogHeader>
-							<AlertDialogTitle>Leave this group?</AlertDialogTitle>
-							<AlertDialogDescription>
-								You will lose access to this group's members and content. If you
-								are the only admin, you must transfer admin rights or delete the
-								group first.
-							</AlertDialogDescription>
-						</AlertDialogHeader>
-						<AlertDialogFooter>
-							<AlertDialogCancel disabled={leaveGroup.isPending}>
-								Cancel
-							</AlertDialogCancel>
-							<AlertDialogAction
-								onClick={async () => {
-									await leaveGroup.mutateAsync({ groupId });
-								}}
-								className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+				<div className="flex gap-2 self-end sm:self-auto">
+					<Button
+						onClick={() =>
+							navigate({ to: "/mealPlanner/$groupId", params: { groupId } })
+						}
+						className="self-end sm:self-auto"
+					>
+						Open Meal Planner
+					</Button>
+					{isAdmin && (
+						<AlertDialog>
+							<AlertDialogTrigger asChild>
+								<Button
+									variant="destructive"
+									className="self-end sm:self-auto"
+									disabled={deleteGroup.isPending}
+								>
+									{deleteGroup.isPending ? "Deleting…" : "Delete Group"}
+								</Button>
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle>Delete this group?</AlertDialogTitle>
+									<AlertDialogDescription>
+										This action is permanent and will remove the group and its
+										memberships. You cannot undo this.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel disabled={deleteGroup.isPending}>
+										Cancel
+									</AlertDialogCancel>
+									<AlertDialogAction
+										onClick={async () => {
+											await deleteGroup.mutateAsync({ id: groupId });
+											navigate({ to: "/groups" });
+										}}
+										className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+										disabled={deleteGroup.isPending}
+									>
+										Confirm Delete
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
+					)}
+
+					<AlertDialog>
+						<AlertDialogTrigger asChild>
+							<Button
+								variant="destructive"
+								className="self-end sm:self-auto"
 								disabled={leaveGroup.isPending}
 							>
-								Confirm Leave
-							</AlertDialogAction>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
+								{leaveGroup.isPending ? "Leaving…" : "Leave Group"}
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Leave this group?</AlertDialogTitle>
+								<AlertDialogDescription>
+									You will lose access to this group's members and content. If
+									you are the only admin, you must transfer admin rights or
+									delete the group first.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel disabled={leaveGroup.isPending}>
+									Cancel
+								</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={async () => {
+										await leaveGroup.mutateAsync({ groupId });
+									}}
+									className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+									disabled={leaveGroup.isPending}
+								>
+									Confirm Leave
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				</div>
 			</div>
 
 			<div className="mt-8 grid gap-8 md:grid-cols-2">
