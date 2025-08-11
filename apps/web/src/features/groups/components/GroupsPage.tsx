@@ -87,6 +87,13 @@ export function GroupsPage() {
 			<GroupHeader
 				name="Groups"
 				description="Manage your groups and collaborate with others on meal planning."
+				showBack={true}
+				backText={"Back Home"}
+				onBack={() =>
+					navigate({
+						to: "/",
+					})
+				}
 			/>
 
 			<Tabs

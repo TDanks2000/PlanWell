@@ -58,7 +58,7 @@ export function CreateGroupDialog() {
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button aria-label="Create group">
-					<Plus className="mr-2 h-4 w-4" />
+					<Plus />
 					Create Group
 				</Button>
 			</DialogTrigger>
