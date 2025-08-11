@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import type { trpc } from "@/utils/trpc";
 import "../index.css";
+import NavigationBar from "@/components/navigation";
 import { OnboardingScreen } from "@/features/onboarding/components";
 import { useSession } from "@/hooks/useSession";
 
@@ -64,7 +65,10 @@ function RootComponent() {
 					) : isFetching ? (
 						<Loader />
 					) : (
-						<Outlet />
+						<>
+							<NavigationBar />
+							<Outlet />
+						</>
 					)}
 				</div>
 				<Toaster richColors />

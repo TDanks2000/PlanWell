@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Calendar, Plus, Users, UtensilsCrossed } from "lucide-react";
+import { Calendar, Users, UtensilsCrossed } from "lucide-react";
 import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -251,11 +251,6 @@ function EmptyGroups() {
 			</div>
 			<div className="flex items-center gap-2">
 				<CreateGroupDialog />
-				<Button asChild variant="outline">
-					<Link to="/groups">
-						<Plus className="mr-2 h-4 w-4" /> Explore Groups
-					</Link>
-				</Button>
 			</div>
 		</div>
 	);

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
+import { CreateGroupDialog } from "@/features/groups/components/CreateGroupDialog";
 import { GroupCard } from "@/features/groups/components/GroupCard";
 import { useGroups } from "@/features/groups/hooks/useGroups";
 import { CreateMealPlanDialog } from "@/features/mealPlanner/components/CreateMealPlanDialog";
@@ -154,9 +155,12 @@ function MealPlannerIndex() {
 			<section className="mt-8 space-y-3">
 				<h2 className="font-medium text-base">All your groups</h2>
 				{allGroups.length === 0 ? (
-					<p className="text-muted-foreground text-sm">
-						You are not in any groups yet.
-					</p>
+					<div className="flex flex-col items-center justify-center gap-3 rounded-lg border bg-muted/10 p-6 text-center">
+						<p className="text-muted-foreground text-sm">
+							You're not in any groups yet. Create one to start planning meals.
+						</p>
+						<CreateGroupDialog />
+					</div>
 				) : (
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 						{allGroups.map((g) => (
