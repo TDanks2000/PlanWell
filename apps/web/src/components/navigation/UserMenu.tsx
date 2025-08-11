@@ -50,7 +50,7 @@ export function UserMenu() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-56">
 				<DropdownMenuLabel className="truncate">
-					{session?.user?.email}
+					{session?.user?.username ?? session?.user?.email}
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
