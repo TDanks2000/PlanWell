@@ -113,7 +113,7 @@ function MealPlannerIndex() {
 											})
 										}
 									/>
-									<div className="flex items-center gap-2">
+									<div className="flex flex-col items-stretch gap-2 sm:flex-row">
 										{(() => {
 											const q = groupIdToMealPlans.get(g.group.id);
 											const showCreate =
@@ -121,6 +121,7 @@ function MealPlannerIndex() {
 											return showCreate ? (
 												<Button
 													size="sm"
+													className="w-full sm:w-auto"
 													onClick={() => {
 														setSelectedGroupId(g.group.id);
 														setCreateOpen(true);
@@ -133,6 +134,7 @@ function MealPlannerIndex() {
 										<Button
 											variant="ghost"
 											size="sm"
+											className="w-full sm:w-auto"
 											onClick={() =>
 												navigate({
 													to: "/mealPlanner/$groupId",

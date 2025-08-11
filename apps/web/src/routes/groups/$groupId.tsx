@@ -93,12 +93,12 @@ function GroupDetailComponent() {
 					<div />
 				)}
 
-				<div className="flex gap-2 self-end sm:self-auto">
+				<div className="flex flex-col items-stretch gap-2 self-end sm:flex-row sm:self-auto">
 					<Button
 						onClick={() =>
 							navigate({ to: "/mealPlanner/$groupId", params: { groupId } })
 						}
-						className="self-end sm:self-auto"
+						className="w-full self-stretch sm:w-auto sm:self-auto"
 					>
 						Open Meal Planner
 					</Button>
@@ -107,7 +107,7 @@ function GroupDetailComponent() {
 							<AlertDialogTrigger asChild>
 								<Button
 									variant="destructive"
-									className="self-end sm:self-auto"
+									className="w-full self-stretch sm:w-auto sm:self-auto"
 									disabled={deleteGroup.isPending}
 								>
 									{deleteGroup.isPending ? "Deleting…" : "Delete Group"}
@@ -144,7 +144,7 @@ function GroupDetailComponent() {
 						<AlertDialogTrigger asChild>
 							<Button
 								variant="destructive"
-								className="self-end sm:self-auto"
+								className="w-full self-stretch sm:w-auto sm:self-auto"
 								disabled={leaveGroup.isPending}
 							>
 								{leaveGroup.isPending ? "Leaving…" : "Leave Group"}

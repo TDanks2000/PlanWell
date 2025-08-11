@@ -49,11 +49,11 @@ function HomeComponent() {
 							Plan meals with your groups and keep everyone on the same page.
 						</p>
 					</div>
-					<div className="flex items-center gap-2">
-						<Button asChild variant="outline">
+					<div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+						<Button asChild variant="outline" className="w-full sm:w-auto">
 							<Link to="/groups">Manage Groups</Link>
 						</Button>
-						<Button asChild>
+						<Button asChild className="w-full sm:w-auto">
 							<Link to="/mealPlanner">Open Meal Planner</Link>
 						</Button>
 					</div>
@@ -89,8 +89,13 @@ function HomeComponent() {
 							</CardTitle>
 							<CardDescription>Plan and track meals</CardDescription>
 						</CardHeader>
-						<CardContent className="flex items-center gap-2">
-							<Button asChild variant="outline" size="sm">
+						<CardContent className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+							<Button
+								asChild
+								variant="outline"
+								size="sm"
+								className="w-full sm:w-auto"
+							>
 								<Link to="/mealPlanner">Go to planner</Link>
 							</Button>
 							<CreateGroupDialog />
@@ -101,13 +106,18 @@ function HomeComponent() {
 
 			{/* Groups */}
 			<Card>
-				<CardHeader className="flex flex-row items-center justify-between">
+				<CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 					<div>
 						<CardTitle className="text-lg">Your Groups</CardTitle>
 						<CardDescription>Collaborate on meal plans</CardDescription>
 					</div>
-					<div className="flex items-center gap-2">
-						<Button asChild variant="outline" size="sm">
+					<div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+						<Button
+							asChild
+							variant="outline"
+							size="sm"
+							className="w-full sm:w-auto"
+						>
 							<Link to="/groups">View all</Link>
 						</Button>
 						<CreateGroupDialog />
@@ -184,12 +194,17 @@ function HomeComponent() {
 			{/* Upcoming meals across groups */}
 			<div className="mt-6">
 				<Card>
-					<CardHeader className="flex flex-row items-center justify-between">
+					<CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 						<div>
 							<CardTitle className="text-lg">Upcoming Meals</CardTitle>
 							<CardDescription>What’s coming up next</CardDescription>
 						</div>
-						<Button asChild variant="outline" size="sm">
+						<Button
+							asChild
+							variant="outline"
+							size="sm"
+							className="w-full sm:w-auto"
+						>
 							<Link to="/mealPlanner">Open planner</Link>
 						</Button>
 					</CardHeader>
