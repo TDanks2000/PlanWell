@@ -7,8 +7,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
-type MealType = "breakfast" | "lunch" | "dinner" | "snack";
+import type { MealType } from "@/types/mealPlanner";
 
 interface BasicInfoTabProps {
 	mealName: string;

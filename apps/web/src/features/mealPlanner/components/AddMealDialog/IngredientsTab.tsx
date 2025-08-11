@@ -6,34 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { RouterInput, RouterOutput } from "@/utils/trpc";
+import type {
+	CreateIngredientMutation,
+	GetIngredientsQuery,
+	Ingredient,
+	MealIngredient,
+} from "@/types/mealPlanner";
 
-type Ingredient = NonNullable<
-	RouterOutput["mealPlanner"]["getIngredients"]
->[0]["ingredient"];
-
-type MealIngredient = {
-	ingredientId: string;
-	ingredientName: string;
-	quantity: number;
-	unit?: string;
-	notes?: string;
-};
-
-type CreateIngredientMutation = {
-	isPending: boolean;
-	mutateAsync: (
-		args: RouterInput["mealPlanner"]["createIngredient"],
-	) => Promise<RouterOutput["mealPlanner"]["createIngredient"]>;
-};
-
-type GetIngredientsQuery = {
-	data?: {
-		ingredient: Ingredient;
-		creator: { id: string; name: string; image?: string };
-	}[];
-	isLoading: boolean;
-};
+// types moved to @/types/mealPlanner
 
 interface IngredientsTabProps {
 	ingredientSearch: string;

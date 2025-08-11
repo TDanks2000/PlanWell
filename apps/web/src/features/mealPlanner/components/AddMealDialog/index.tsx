@@ -11,55 +11,21 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { RouterInput, RouterOutput } from "@/utils/trpc";
+import type {
+	AddMealIngredientMutation,
+	CreateIngredientMutation,
+	CreateMealMutation,
+	GetIngredientsQuery,
+	Ingredient,
+	MealIngredient,
+	MealType,
+} from "@/types/mealPlanner";
 import { BasicInfoTab } from "./BasicInfoTab";
 import { DetailsTab } from "./DetailsTab";
 import { IngredientsTab } from "./IngredientsTab";
 import { TimingTab } from "./TimingTab";
 
-type MealType = "breakfast" | "lunch" | "dinner" | "snack";
-
-// Use tRPC generated types
-type Ingredient = NonNullable<
-	RouterOutput["mealPlanner"]["getIngredients"]
->[0]["ingredient"];
-
-type MealIngredient = {
-	ingredientId: string;
-	ingredientName: string;
-	quantity: number;
-	unit?: string;
-	notes?: string;
-};
-
-type CreateMealMutation = {
-	isPending: boolean;
-	mutateAsync: (
-		args: RouterInput["mealPlanner"]["createMeal"],
-	) => Promise<RouterOutput["mealPlanner"]["createMeal"]>;
-};
-
-type CreateIngredientMutation = {
-	isPending: boolean;
-	mutateAsync: (
-		args: RouterInput["mealPlanner"]["createIngredient"],
-	) => Promise<RouterOutput["mealPlanner"]["createIngredient"]>;
-};
-
-type AddMealIngredientMutation = {
-	isPending: boolean;
-	mutateAsync: (
-		args: RouterInput["mealPlanner"]["addMealIngredient"],
-	) => Promise<RouterOutput["mealPlanner"]["addMealIngredient"]>;
-};
-
-type GetIngredientsQuery = {
-	data?: {
-		ingredient: Ingredient;
-		creator: { id: string; name: string; image?: string };
-	}[];
-	isLoading: boolean;
-};
+// types moved to @/types/mealPlanner
 
 interface AddMealDialogProps {
 	activePlanId: string | null;
@@ -76,7 +42,7 @@ export function AddMealDialog({
 	activePlanId,
 	createMeal,
 	createIngredient,
-	addMealIngredient,
+	addMealIngredient: _addMealIngredient,
 	getIngredients,
 	defaultDate,
 	open: controlledOpen,
@@ -355,7 +321,7 @@ export function AddMealDialog({
 							await createMeal.mutateAsync({
 								mealPlanId: activePlanId,
 								name: mealName.trim(),
-								plannedDate: mealDate,
+								plannedDate: mealDate ?? undefined,
 								mealType: (mealType === "none" ? undefined : mealType) as
 									| MealType
 									| undefined,

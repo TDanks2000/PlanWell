@@ -1,4 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type {
+	AddMealIngredientMutation,
+	CreateIngredientMutation,
+	CreateMealMutation,
+	GetIngredientsQuery,
+} from "@/types/mealPlanner";
 import AddMealDialog from "./AddMealDialog";
 import CalendarGrid, { type MealEntry } from "./CalendarGrid";
 import MonthNavigator from "./MonthNavigator";
@@ -12,45 +18,10 @@ interface MealPlanCardProps {
 	onToday: () => void;
 	onAddMealAtDate: (dateKey: string) => void;
 	activePlanId: string | null;
-	createMeal: {
-		isPending: boolean;
-		mutateAsync: (args: {
-			mealPlanId: string;
-			name: string;
-			plannedDate?: string;
-			mealType?: "breakfast" | "lunch" | "dinner" | "snack";
-		}) => Promise<unknown>;
-	};
-	createIngredient?: {
-		isPending: boolean;
-		mutateAsync: (args: {
-			name: string;
-			description?: string;
-			category?: string;
-			unit?: string;
-			caloriesPerUnit?: number;
-			proteinPerUnit?: number;
-			carbsPerUnit?: number;
-			fatPerUnit?: number;
-		}) => Promise<any>;
-	};
-	addMealIngredient?: {
-		isPending: boolean;
-		mutateAsync: (args: {
-			mealId: string;
-			ingredientId: string;
-			quantity: number;
-			unit?: string;
-			notes?: string;
-		}) => Promise<unknown>;
-	};
-	getIngredients?: {
-		data?: {
-			ingredient: any;
-			creator: { id: string; name: string; image?: string };
-		}[];
-		isLoading: boolean;
-	};
+	createMeal: CreateMealMutation;
+	createIngredient?: CreateIngredientMutation;
+	addMealIngredient?: AddMealIngredientMutation;
+	getIngredients?: GetIngredientsQuery;
 	addMealOpen: boolean;
 	setAddMealOpen: (open: boolean) => void;
 	defaultAddDate?: string;
